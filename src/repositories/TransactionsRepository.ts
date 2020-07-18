@@ -1,17 +1,19 @@
+// é um custom repository...
 import { EntityRepository, Repository } from 'typeorm';
 
 import Transaction from '../models/Transaction';
 
+// interface para padronizar o recebimento de informações
 interface Balance {
   income: number;
   outcome: number;
   total: number;
 }
 
-@EntityRepository(Transaction)
-class TransactionsRepository extends Repository<Transaction> {
-  public async getBalance(): Promise<Balance> {
-    const transactions = await this.find();
+@EntityRepository(Transaction) // decorator
+class TransactionsRepository extends Repository<Transaction> { // um custom repository extends de um repository?
+  public async getBalance(): Promise<Balance> { // criei um custom repository só pelo método customizado... se não, não precisaria de um custom repository
+    const transactions = await this.find(); // this -> isto, no caso, o repositório TypeORM
 
     const { income, outcome } = transactions.reduce(
       (accumulator, transaction) => {

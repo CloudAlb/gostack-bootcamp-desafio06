@@ -1,12 +1,12 @@
 import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
+  Entity, // nome da tabela
+  Column, // coluna
+  PrimaryGeneratedColumn, // auto generated
+  CreateDateColumn, // created_at, é automática
+  UpdateDateColumn, // updated at, é automática
 } from 'typeorm';
 
-@Entity('categories')
+@Entity('categories') // decorator
 class Category {
   @PrimaryGeneratedColumn('uuid')
   id: string;

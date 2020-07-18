@@ -4,11 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
+  ManyToOne, // cardinalidade
+  JoinColumn, // join, ligação
 } from 'typeorm';
 
-import Category from '../models/Category';
+import Category from '../models/Category'; // preciso informar o model da tabela referenciada para fazer um join
 
 @Entity('transactions')
 class Transaction {

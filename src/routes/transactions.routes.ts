@@ -11,13 +11,13 @@ import ImportTransactionsService from '../services/ImportTransactionsService';
 
 import uploadConfig from '../config/upload'; // importando arquivo de configurações para usar com o multer
 
-const upload = multer(uploadConfig); // instanciando
+const upload = multer(uploadConfig); // instanciando com o arquivo de configs do multer que criei
 
 const transactionsRouter = Router();
 
 transactionsRouter.get('/', async (request, response) => {
-  const transactionsRepository = getCustomRepository(TransactionsRepository);
-  const transactions = await transactionsRepository.find();
+  const transactionsRepository = getCustomRepository(TransactionsRepository); // não preciso do model Transaction para importar, senão seria getRepository()
+  const transactions = await transactionsRepository.find(); // pegando todas as transações
   const balance = await transactionsRepository.getBalance();
 
   return response.json({ transactions, balance });
@@ -54,7 +54,7 @@ upload.single('file'),
 async (request, response) => {
   const importTransactions = new ImportTransactionsService();
 
-  const transactions = await importTransactions.execute(request.file.path);
+  const transactions = await importTransactions.execute(request.file.path); // passando o caminho como parâmetro
 
   return response.json(transactions);
 });

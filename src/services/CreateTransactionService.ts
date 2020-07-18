@@ -7,7 +7,6 @@ import Category from '../models/Category';
 import {
   getRepository,
   getCustomRepository,
-  TransactionRepository,
 } from 'typeorm'; // eu mesmo que importei
 
 // criei uma interface para padronizar os dados recebidos
@@ -28,7 +27,7 @@ class CreateTransactionService {
     // TODO
     // pegando o repositório existente, que vai conter todos os métodos necessários
     const transactionsRepository = getCustomRepository(TransactionsRepository);
-    const categoryRepository = getRepository(Category);
+    const categoryRepository = getRepository(Category); // notar na != do uso de getCustomRepository() e getRepository()
 
     // checando se o tipo é outcome e extrapola o saldo atual
     const { total } = await transactionsRepository.getBalance();
@@ -40,7 +39,7 @@ class CreateTransactionService {
     // checando se a categoria já existe (mesmo título)
     let transactionCategory = await categoryRepository.findOne({
       where: {
-        title: category,
+        title: category, // se title de category === parâmetro category
       },
     });
 
@@ -54,6 +53,9 @@ class CreateTransactionService {
       await categoryRepository.save(transactionCategory);
     }
 
+    // notar como foi simplificado o caso de precisar ou não criar uma category...
+    // se existir, blz
+    // se não existir, cria e guarda usando a mesma variável, e depois usa essa mesma variável aqui
     const transaction = transactionsRepository.create({
       title,
       value,

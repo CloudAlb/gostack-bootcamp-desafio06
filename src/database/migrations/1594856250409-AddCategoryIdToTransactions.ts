@@ -17,6 +17,7 @@ export class AddCategoryIdToTransactions1594856250409
       }),
     );
 
+    // "apenas criando a ligação entre as tabelas, onde as chaves já estão criadas" (?)
     await queryRunner.createForeignKey(
       'transactions', // onde a chave estrangeira será criada
       new TableForeignKey({
